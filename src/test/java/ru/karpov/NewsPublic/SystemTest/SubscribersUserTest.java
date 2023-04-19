@@ -3,9 +3,9 @@ package ru.karpov.NewsPublic.SystemTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class LoginTest {
+public class SubscribersUserTest {
     @Test
-    public void userCanLoginByUsername() {
+    public void userCanSubscribeAndUnsubscribe() {
         Assertions.assertEquals(2, 1+1);
     }
 }
