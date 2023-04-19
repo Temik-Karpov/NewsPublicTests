@@ -24,7 +24,7 @@ public class FilterPostTest extends BaseTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions ops = new ChromeOptions();
         ops.addArguments("--disable-dev-shm-usage");
-        ops.addArguments("--headless");
+        //ops.addArguments("--headless");
         ops.addArguments("--disable-gpu");
         ops.addArguments("--no-sandbox");
         ops.addArguments("--remote-allow-origins=*");
