@@ -16,82 +16,83 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 
-public class FilterPostTest extends BaseTest{
-  WebDriver driver;
+public class FilterPostTest extends BaseTest {
+    WebDriver driver;
 
-  @BeforeEach
-  void setup() {
-    WebDriverManager.chromedriver().setup();
-    ChromeOptions ops = new ChromeOptions();
-        /*ops.addArguments("--disable-dev-shm-usage");
+    @BeforeEach
+    void setup() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions ops = new ChromeOptions();
+        ops.addArguments("--disable-dev-shm-usage");
         ops.addArguments("--headless");
         ops.addArguments("--disable-gpu");
-        ops.addArguments("--no-sandbox");*/
-    ops.addArguments("--remote-allow-origins=*");
-    driver = new ChromeDriver(ops);
-    driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
-    driver.manage().timeouts().setScriptTimeout(5000, TimeUnit.MILLISECONDS);
-    driver.manage().timeouts().pageLoadTimeout(10000, TimeUnit.MILLISECONDS);
-  }
-
-  @AfterEach
-  void teardown() {
-    driver.quit();
-  }
-  @Test
-  public void filterPost() {
-    Utils.createNewNews(userRepo, newsRepo, "Test Sport", "Sport", "Test");
-    Utils.createNewNews(userRepo, newsRepo, "Test Sport2", "Sport", "Test");
-    Utils.createNewNews(userRepo, newsRepo, "Test Culture", "Culture", "Test1");
-    Utils.createNewNews(userRepo, newsRepo, "Test Economic", "Economic", "Test");
-    Utils.createNewNews(userRepo, newsRepo, "Test Science", "Science", "Test1");
-    driver.get("http://localhost:8081/");
-    driver.manage().window().setSize(new Dimension(1900, 1020));
-    driver.findElement(By.linkText("LogIn")).click();
-    driver.findElement(By.id("username")).sendKeys("janedoe");
-    driver.findElement(By.id("password")).sendKeys("s3cr3t");
-    driver.findElement(By.id("kc-login")).click();
-    driver.findElement(By.id("category")).click();
-    Assertions.assertEquals("Test Science", driver.findElements(By.cssSelector("h5")).get(0).getText());
-    Assertions.assertEquals("Test Economic", driver.findElements(By.cssSelector("h5")).get(1).getText());
-    Assertions.assertEquals("Test Culture", driver.findElements(By.cssSelector("h5")).get(2).getText());
-    Assertions.assertEquals("Test Sport2", driver.findElements(By.cssSelector("h5")).get(3).getText());
-    Assertions.assertEquals("Test Sport", driver.findElements(By.cssSelector("h5")).get(4).getText());
-    {
-      WebElement dropdown = driver.findElement(By.id("category"));
-      dropdown.findElement(By.xpath("//option[. = 'Sport']")).click();
+        ops.addArguments("--no-sandbox");
+        ops.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(ops);
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
+        driver.manage().timeouts().setScriptTimeout(5000, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().pageLoadTimeout(10000, TimeUnit.MILLISECONDS);
     }
 
-    driver.findElement(By.cssSelector("button")).click();
-    Assertions.assertEquals("Test Sport", driver.findElements(By.cssSelector("h5")).get(0).getText());
-    Assertions.assertEquals("Test Sport2", driver.findElements(By.cssSelector("h5")).get(1).getText());
-    driver.findElement(By.id("category")).click();
-    {
-      WebElement dropdown = driver.findElement(By.id("category"));
-      dropdown.findElement(By.xpath("//option[. = 'Culture']")).click();
+    @AfterEach
+    void teardown() {
+        driver.quit();
     }
-    driver.findElement(By.cssSelector("button")).click();
-    Assertions.assertEquals("Test Culture", driver.findElements(By.cssSelector("h5")).get(0).getText());
-    driver.findElement(By.id("category")).click();
-    {
-      WebElement dropdown = driver.findElement(By.id("category"));
-      dropdown.findElement(By.xpath("//option[. = 'Economic']")).click();
+
+    @Test
+    public void filterPost() {
+        Utils.createNewNews(userRepo, newsRepo, "Test Sport", "Sport", "Test");
+        Utils.createNewNews(userRepo, newsRepo, "Test Sport2", "Sport", "Test");
+        Utils.createNewNews(userRepo, newsRepo, "Test Culture", "Culture", "Test1");
+        Utils.createNewNews(userRepo, newsRepo, "Test Economic", "Economic", "Test");
+        Utils.createNewNews(userRepo, newsRepo, "Test Science", "Science", "Test1");
+        driver.get("http://localhost:8081/");
+        driver.manage().window().setSize(new Dimension(1900, 1020));
+        driver.findElement(By.linkText("LogIn")).click();
+        driver.findElement(By.id("username")).sendKeys("janedoe");
+        driver.findElement(By.id("password")).sendKeys("s3cr3t");
+        driver.findElement(By.id("kc-login")).click();
+        driver.findElement(By.id("category")).click();
+        Assertions.assertEquals("Test Science", driver.findElements(By.cssSelector("h5")).get(0).getText());
+        Assertions.assertEquals("Test Economic", driver.findElements(By.cssSelector("h5")).get(1).getText());
+        Assertions.assertEquals("Test Culture", driver.findElements(By.cssSelector("h5")).get(2).getText());
+        Assertions.assertEquals("Test Sport2", driver.findElements(By.cssSelector("h5")).get(3).getText());
+        Assertions.assertEquals("Test Sport", driver.findElements(By.cssSelector("h5")).get(4).getText());
+        {
+            WebElement dropdown = driver.findElement(By.id("category"));
+            dropdown.findElement(By.xpath("//option[. = 'Sport']")).click();
+        }
+
+        driver.findElement(By.cssSelector("button")).click();
+        Assertions.assertEquals("Test Sport", driver.findElements(By.cssSelector("h5")).get(0).getText());
+        Assertions.assertEquals("Test Sport2", driver.findElements(By.cssSelector("h5")).get(1).getText());
+        driver.findElement(By.id("category")).click();
+        {
+            WebElement dropdown = driver.findElement(By.id("category"));
+            dropdown.findElement(By.xpath("//option[. = 'Culture']")).click();
+        }
+        driver.findElement(By.cssSelector("button")).click();
+        Assertions.assertEquals("Test Culture", driver.findElements(By.cssSelector("h5")).get(0).getText());
+        driver.findElement(By.id("category")).click();
+        {
+            WebElement dropdown = driver.findElement(By.id("category"));
+            dropdown.findElement(By.xpath("//option[. = 'Economic']")).click();
+        }
+        driver.findElement(By.cssSelector("button")).click();
+        Assertions.assertEquals("Test Economic", driver.findElements(By.cssSelector("h5")).get(0).getText());
+        driver.findElement(By.id("category")).click();
+        {
+            WebElement dropdown = driver.findElement(By.id("category"));
+            dropdown.findElement(By.xpath("//option[. = 'Politics']")).click();
+        }
+        driver.findElement(By.cssSelector("button")).click();
+        Assertions.assertEquals(0, driver.findElements(By.cssSelector("h5")).size());
+        driver.findElement(By.id("category")).click();
+        {
+            WebElement dropdown = driver.findElement(By.id("category"));
+            dropdown.findElement(By.xpath("//option[. = 'Science']")).click();
+        }
+        driver.findElement(By.cssSelector("button")).click();
+        Assertions.assertEquals("Test Science", driver.findElements(By.cssSelector("h5")).get(0).getText());
     }
-    driver.findElement(By.cssSelector("button")).click();
-    Assertions.assertEquals("Test Economic", driver.findElements(By.cssSelector("h5")).get(0).getText());
-    driver.findElement(By.id("category")).click();
-    {
-      WebElement dropdown = driver.findElement(By.id("category"));
-      dropdown.findElement(By.xpath("//option[. = 'Politics']")).click();
-    }
-    driver.findElement(By.cssSelector("button")).click();
-    Assertions.assertEquals(0, driver.findElements(By.cssSelector("h5")).size());
-    driver.findElement(By.id("category")).click();
-    {
-      WebElement dropdown = driver.findElement(By.id("category"));
-      dropdown.findElement(By.xpath("//option[. = 'Science']")).click();
-    }
-    driver.findElement(By.cssSelector("button")).click();
-    Assertions.assertEquals("Test Science", driver.findElements(By.cssSelector("h5")).get(0).getText());
-  }
 }
