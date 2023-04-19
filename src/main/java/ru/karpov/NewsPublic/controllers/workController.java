@@ -45,6 +45,13 @@ public class workController {
         return SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser");
     }
 
+    @GetMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable("id") final String id)
+    {
+        userRepo.delete(userRepo.findUserById(id));
+        return "forward:/userListPage";
+    }
+
     @PostMapping("/addNews")
     public String addNews(@RequestParam("Title") String title, @RequestParam("text") String text,
                           @RequestParam("category") String category,
